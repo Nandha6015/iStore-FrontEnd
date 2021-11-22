@@ -1,3 +1,19 @@
+function loadProd() {
+  fetch("http://localhost:8080/products", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      //"Content-Type":"application/json"
+    },
+    //body:JSON.stringify({"userName":username.value,"password":password.value})
+  })
+    .then((res) => res.json())
+    .then((displayCart) => {
+      console.log(displayCart);
+    });
+}
+
+loadProd();
 const products = [
   {
     id: 1,
