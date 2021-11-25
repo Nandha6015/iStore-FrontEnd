@@ -39,15 +39,15 @@ body {
     color: var(--mainYellow);
 }
 .banner-product{
-    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(../img/pageBcg/productsBcg.jpeg) center/cover fixed no-repeat;
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(../img/pageBcg/productsBcg.png) center/cover fixed no-repeat;
     min-height: 60vh;
 }
 .banner-single-product{
-    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(../img/pageBcg/singleBcg.jpeg) center/cover fixed no-repeat;
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(../img/pageBcg/singleBcg.png) center/cover fixed no-repeat;
     min-height: 60vh;
 }
 .banner-store{
-    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(../img/pageBcg/storeBcg.jpeg) center/cover fixed no-repeat;
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(../img/pageBcg/storeBcg.png) center/cover fixed no-repeat;
     min-height: 60vh;
 }
 /* end of ganeral style */
@@ -90,7 +90,7 @@ body {
 /* banner */
 .banner{
     min-height: calc(100vh - 101px);
-    background: url(../img/pageBcg/bannerBcg.jpeg);
+    background: url(../img/pageBcg/banner.png);
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -215,7 +215,7 @@ body {
 
 /* home filler */
 .home-filler{
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(../img/home-filler.jpeg) center/cover fixed no-repeat;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(../img/home-filler.png) center/cover fixed no-repeat;
     min-height: 60vh;
 }
 .collection-link{
