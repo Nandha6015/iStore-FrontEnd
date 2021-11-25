@@ -58,6 +58,18 @@ const productContainer = document.getElementById("productContainer");
 //         <a href="#" class="text-capitalize btn btn-primary">add to cart</a>
 //     </div>
 // </div>
+function loadproduct() {
+  fetch("http://localhost:8080/cart", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      //"Content-Type":"application/json"
+    },
+    //body:JSON.stringify({"userName":username.value,"password":password.value})
+  })
+    .then((res) => res.json())
+    .then(displayproduct);
+}
 
 function createProduct(product) {
   const h2 = document.createElement("a");
@@ -107,5 +119,5 @@ function onLoad() {
     createProduct(product);
   });
 }
-
+//loadproduct();
 onLoad();
