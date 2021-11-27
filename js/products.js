@@ -57,16 +57,16 @@ function loadproduct() {
 
 function createProduct(product) {
   const h2 = document.createElement("a");
-  h2.href = "singleproduct.html?id=" + product.id;
+  h2.href = "singleproduct.html?id=" + product.productId;
   h2.className = "h2 text-capitalize";
   h2.innerText = product.productName;
 
   const oldPrice = document.createElement("span");
   oldPrice.className = "text-muted old-price mx-2";
-  oldPrice.innerText = "$" + product.oldPrice;
+  oldPrice.innerText = "$" + (product.productPrice + 1000);
 
   const price = document.createElement("span");
-  price.innerText = "$" + product.price;
+  price.innerText = "$" + product.productPrice;
 
   const h6 = document.createElement("h6");
   h6.appendChild(oldPrice);
@@ -88,7 +88,7 @@ function createProduct(product) {
 
   const image = document.createElement("img");
   image.className = "col-5";
-  image.src = product.image;
+  image.src = product.productImgSrc;
 
   const productDiv = document.createElement("div");
   productDiv.className = "col-5 shadow container row p-5 m-4";
