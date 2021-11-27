@@ -30,6 +30,7 @@ function addToCartClick(product, btn) {
 
   if (isAdded) {
     // TODO: use fetch method to add to cart in backend
+    
     btn.className = "btn btn-dark my-2";
     btn.innerText = "Remove from Cart";
   } else {

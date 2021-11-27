@@ -76,15 +76,15 @@ function createProduct(product) {
   details.append(h2);
   details.append(h6);
 
-  const addToCart = document.createElement("a");
-  addToCart.href = "#";
-  addToCart.className = "text-capitalize btn btn-primary";
-  addToCart.innerText = "Add to Cart";
+  //const addToCart = document.createElement("a");
+  //addToCart.href = "store.html";
+  //addToCart.className = "text-capitalize btn btn-primary";
+  //addToCart.innerText = "Add to Cart";
 
   const content = document.createElement("div");
   content.className = "col-7";
   content.appendChild(details);
-  content.appendChild(addToCart);
+  //content.appendChild(addToCart);
 
   const image = document.createElement("img");
   image.className = "col-5";
