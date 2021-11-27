@@ -97,14 +97,47 @@ function addToCartClick(product, btn) {
 
   if (isAdded) {
     // TODO: use fetch method to add to cart in backend
-
+    addtocart();
     btn.className = "btn btn-dark my-2";
     btn.innerText = "Remove from Cart";
   } else {
     // TODO: use fetch method to remove from cart in backend
+    removefromcart();
     btn.className = "btn btn-yellow my-2";
     btn.innerText = "Add to Cart";
   }
+}
+
+function addtocart() {
+  fetch("http://localhost:8080/products/" + getProduct(), {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      //"Content-Type":"application/json"
+    },
+    //body:JSON.stringify({"userName":username.value,"password":password.value})
+  })
+    .then((res) => res.json())
+    .then((singleprod) => {
+      product.push(singleprod);
+      displayProduct();
+    });
+}
+
+function removefromcart() {
+  fetch("http://localhost:8080/products/" + getProduct(), {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      //"Content-Type":"application/json"
+    },
+    //body:JSON.stringify({"userName":username.value,"password":password.value})
+  })
+    .then((res) => res.json())
+    .then((singleprod) => {
+      product.push(singleprod);
+      displayProduct();
+    });
 }
 
 loadproduct();
