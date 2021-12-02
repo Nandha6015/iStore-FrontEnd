@@ -16,6 +16,7 @@
 // };
 
 let id;
+const userId = localStorage.getItem("userId");
 
 function loadproduct() {
   fetch("http://localhost:8080/products/" + getProduct(), {
@@ -50,11 +51,11 @@ function displayProduct(product) {
   const priceContainer = document.createElement("h3");
   const newPrice = document.createElement("span");
   newPrice.className = "mr-2";
-  newPrice.innerText = "$" + product.productPrice;
+  newPrice.innerText = "₹" + product.productPrice;
 
   const oldPrice = document.createElement("span");
   oldPrice.className = "text-muted old-price";
-  oldPrice.innerText = "$" + (product.productPrice + 1000);
+  oldPrice.innerText = "₹" + (product.productPrice + 1000);
 
   priceContainer.appendChild(newPrice);
   priceContainer.appendChild(oldPrice);
@@ -94,14 +95,16 @@ function displayProduct(product) {
 
 function addToCartClick(product, btn) {
   const isAdded = btn.innerText.includes("Add");
-
-  if (localStorage.getItem("userId") == null) {
-    location.href = "login.html";
-  }
-
+  //localStorage.clear();
+  //console.log(localStorage.key(0));
+  //console.log(localStorage.getItem("userId"));
+  // if (localStorage.getItem("userId") == null) {
+  //console.log(localStorage.getItem("userId"));
+  // location.href = "login.html";
+  // } else {
   if (isAdded) {
     // TODO: use fetch method to add to cart in backend
-    addtocart();
+    addtocart(product);
     btn.className = "btn btn-dark my-2";
     btn.innerText = "Remove from Cart";
   } else {
@@ -110,22 +113,23 @@ function addToCartClick(product, btn) {
     btn.className = "btn btn-yellow my-2";
     btn.innerText = "Add to Cart";
   }
+  // }
 }
 
-function addtocart() {
-  fetch("http://localhost:8080/cart/" + getProduct(), {
+function addtocart(product) {
+  fetch("http://localhost:8080/" + userId + "/cart/" + getProduct(), {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ product }),
+    body: JSON.stringify(product),
   });
   //console.log(JSON.stringify({ product }));
 }
 
 function removefromcart() {
-  fetch("http://localhost:8080/cart/" + getProduct(), {
+  fetch("http://localhost:8080/" + userId + "/cart/" + getProduct(), {
     method: "DELETE",
     headers: {
       Accept: "application/json",

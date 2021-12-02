@@ -89,7 +89,7 @@ function createProduct(product) {
 
   const image = document.createElement("img");
   image.className = "col-5";
-  image.src = product.images.imgSrc1;
+  image.src = product.productImgSrc;
 
   const productDiv = document.createElement("div");
   productDiv.className = "col-5 shadow container row p-5 m-4";
