@@ -37,7 +37,8 @@ function loadproduct() {
   })
     .then((res) => res.json())
     .then((displayProduct) => {
-      prod.push(...displayProduct._embedded.products);
+      prod.push(...displayProduct);
+      console.log(prod);
       onLoad();
     });
 }
@@ -57,7 +58,7 @@ function loadproduct() {
 
 function createProduct(product) {
   const h2 = document.createElement("a");
-  h2.href = "singleproduct.html?id=" + product.productId;
+  h2.href = "singleproduct.html?id=" + product.id;
   h2.className = "h2 text-capitalize";
   h2.innerText = product.productName;
 

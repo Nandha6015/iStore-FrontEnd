@@ -16,6 +16,7 @@
 // };
 
 const product = [];
+let id;
 
 function loadproduct() {
   fetch("http://localhost:8080/products/" + getProduct(), {
@@ -29,13 +30,14 @@ function loadproduct() {
     .then((res) => res.json())
     .then((singleprod) => {
       product.push(singleprod);
+      //console.log(product);
       displayProduct();
     });
 }
 
 function getProduct() {
   const url = new URL(window.location.toString());
-  const id = url.searchParams.get("id");
+  id = url.searchParams.get("id");
   return id;
 }
 
@@ -109,35 +111,24 @@ function addToCartClick(product, btn) {
 }
 
 function addtocart() {
-  fetch("http://localhost:8080/products/" + getProduct(), {
-    method: "GET",
+  fetch("http://localhost:8080/cart/" + getProduct(), {
+    method: "POST",
     headers: {
       Accept: "application/json",
-      //"Content-Type":"application/json"
+      "Content-Type": "application/json",
     },
-    //body:JSON.stringify({"userName":username.value,"password":password.value})
-  })
-    .then((res) => res.json())
-    .then((singleprod) => {
-      product.push(singleprod);
-      displayProduct();
-    });
+    body: JSON.stringify({ product }),
+  });
+  console.log(JSON.stringify({ product }));
 }
 
 function removefromcart() {
-  fetch("http://localhost:8080/products/" + getProduct(), {
-    method: "GET",
+  fetch("http://localhost:8080/cart/" + getProduct(), {
+    method: "DELETE",
     headers: {
       Accept: "application/json",
-      //"Content-Type":"application/json"
     },
-    //body:JSON.stringify({"userName":username.value,"password":password.value})
-  })
-    .then((res) => res.json())
-    .then((singleprod) => {
-      product.push(singleprod);
-      displayProduct();
-    });
+  });
 }
 
 loadproduct();

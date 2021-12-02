@@ -1,16 +1,30 @@
-const upass = document.getElementById('uname')
-const uemail = document.getElementById('uemail')
-const upass = document.getElementById('upass')
-const uaddress = document.getElementById('uaddress')
+const form = document.getElementById("register-form");
 
-function signup(){
-    fetch("http://localhost:8080/signup",{
-        method:"POST",
-        headers:{
-            Accept:"application/json",
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({"userName":uname.value,"userEmail":uemail.value,"userPassword":upass.value,"userAddress":uaddress.value})
-    }).then(res => res.json()).then(data => {console.log(data)})
-}
-signup()
+form.onsubmit = (event) => {
+  event.preventDefault();
+
+  const data = Object.fromEntries(new FormData(form));
+
+  user = {
+    userName: data.userName,
+    userEmail: data.userEmail,
+    userPassword: data.userPassword,
+    userAddress: data.userAddress,
+  };
+
+  fetch("http://localhost:8080/newuser", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  })
+    .then((res) => res.json())
+    .then((userdata) => {
+      const userId = userdata;
+      console.log(userId);
+      localStorage.setItem("userId", userId);
+    });
+  location.href = "index.html";
+};
