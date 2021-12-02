@@ -58,7 +58,7 @@ function loadproduct() {
 
 function createProduct(product) {
   const h2 = document.createElement("a");
-  h2.href = "singleproduct.html?id=" + product.id;
+  h2.href = "singleproduct.html?productId=" + product.productId;
   h2.className = "h2 text-capitalize";
   h2.innerText = product.productName;
 

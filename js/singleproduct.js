@@ -37,7 +37,7 @@ function loadproduct() {
 
 function getProduct() {
   const url = new URL(window.location.toString());
-  id = url.searchParams.get("id");
+  id = url.searchParams.get("productId");
   return id;
 }
 
@@ -97,6 +97,10 @@ function displayProduct() {
 function addToCartClick(product, btn) {
   const isAdded = btn.innerText.includes("Add");
 
+  if (localStorage.getItem("userId") == null) {
+    location.href = "login.html";
+  }
+
   if (isAdded) {
     // TODO: use fetch method to add to cart in backend
     addtocart();
@@ -119,7 +123,7 @@ function addtocart() {
     },
     body: JSON.stringify({ product }),
   });
-  console.log(JSON.stringify({ product }));
+  //console.log(JSON.stringify({ product }));
 }
 
 function removefromcart() {
