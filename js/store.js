@@ -24,19 +24,19 @@ const userId = localStorage.getItem("userId");
     productTotalPrice: 20000,
   },
 ];*/
+loadStore();
 
 function loadStore() {
   fetch("http://localhost:8080/" + userId + "/cart", {
     method: "GET",
     headers: {
       Accept: "application/json",
-      //"Content-Type":"application/json"
     },
-    //body:JSON.stringify({"userName":username.value,"password":password.value})
   })
     .then((res) => res.json())
     .then((displayCart) => {
       userProducts.push(...displayCart);
+      console.log(userProducts);
       onLoad();
     });
 }
@@ -48,7 +48,7 @@ function onLoad() {
   });
 }
 
-function createProduct(products) {
+function createProduct(product) {
   // <div class="col-10 mx-auto col-md-2 my-3">
   //   <img
   //     src="img/img-products/product-1.png"
@@ -59,7 +59,7 @@ function createProduct(products) {
 
   const img = document.createElement("img");
   img.className = "img-fluid";
-  img.src = products.product.productImgSrc;
+  img.src = product.productImgSrc;
 
   const firstDiv = document.createElement("div");
   firstDiv.className = "col-10 mx-auto col-md-2 my-3";
@@ -71,7 +71,7 @@ function createProduct(products) {
 
   const para = document.createElement("p");
   para.className = "text-uppercase";
-  para.innerText = products.product.productName;
+  para.innerText = product.productName;
 
   const secondDiv = document.createElement("div");
   secondDiv.className = "col-10 mx-auto col-md-4";
@@ -83,7 +83,7 @@ function createProduct(products) {
 
   const para1 = document.createElement("p");
   para1.className = "text-uppercase";
-  para1.innerText = "$" + products.product.productPrice;
+  para1.innerText = "$" + product.productPrice;
 
   const thirdDiv = document.createElement("div");
   thirdDiv.className = "col-10 mx-auto col-md-2";
@@ -103,7 +103,7 @@ function createProduct(products) {
 
   const span2 = document.createElement("span");
   span2.className = "btn btn-black mx-1";
-  span2.innerText = products.productNos;
+  span2.innerText = product.productNos;
 
   const span3 = document.createElement("span");
   span3.className = "btn btn-black mx-1";
@@ -125,7 +125,7 @@ function createProduct(products) {
 
   const para2 = document.createElement("p");
   para2.className = "text-uppercase";
-  para2.innerText = "$" + products.product.productPrice;
+  para2.innerText = "$" + product.productPrice * product.productNos;
 
   const sixthDiv = document.createElement("div");
   sixthDiv.className = "col-10 mx-auto col-md-2";
@@ -138,20 +138,14 @@ function createProduct(products) {
   cartcontainer.append(sixthDiv);
 }
 
-loadStore();
-
 document.getElementById("checkout").onclick = function () {
-  const productIds = [];
-  userProducts.forEach((prod) => {
-    productIds.push(prod.product.productId);
-  });
-  fetch("http://localhost:8080/" + userId + "/orders/", {
+  fetch("http://localhost:8080/" + userId + "/orders", {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ productIds }),
+    body: JSON.stringify(userProducts),
   });
   fetch("http://localhost:8080/" + userId + "/cart", {
     method: "DELETE",
@@ -159,7 +153,7 @@ document.getElementById("checkout").onclick = function () {
       Accept: "application/json",
     },
   });
-  console.log(productIds);
+  //console.log(productIds);
   //console.log(JSON.stringify({ userProducts }));
   //location.href = "orderhistory.html";
 };

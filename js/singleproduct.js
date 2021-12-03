@@ -15,25 +15,11 @@
 //   },
 // };
 
-const product = [];
 let id;
-
-function loadproduct() {
-  fetch("http://localhost:8080/products/" + getProduct(), {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      //"Content-Type":"application/json"
-    },
-    //body:JSON.stringify({"userName":username.value,"password":password.value})
-  })
-    .then((res) => res.json())
-    .then((singleprod) => {
-      product.push(singleprod);
-      //console.log(product);
-      displayProduct();
-    });
-}
+const userId = localStorage.getItem("userId");
+let isAdded = false;
+isInCart();
+loadproduct();
 
 function getProduct() {
   const url = new URL(window.location.toString());
@@ -41,33 +27,66 @@ function getProduct() {
   return id;
 }
 
+function loadproduct() {
+  fetch("http://localhost:8080/products/" + getProduct(), {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((singleprod) => {
+      const product = singleprod;
+      displayProduct(product);
+    });
+}
+
+function isInCart() {
+  fetch("http://localhost:8080/" + userId + "/cart/" + getProduct(), {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      //console.log(data, 1);
+      isAdded = data;
+    });
+}
+
 const productDetails = document.getElementById("productDetails");
 const mainImage = document.getElementById("mainImage");
 const otherImages = document.getElementById("otherImages");
 
-function displayProduct() {
+function displayProduct(product) {
   const title = document.createElement("h2");
   title.className = "text-uppercase my-2";
-  title.innerText = product[0].productName;
+  title.innerText = product.productName;
 
   const priceContainer = document.createElement("h3");
   const newPrice = document.createElement("span");
   newPrice.className = "mr-2";
-  newPrice.innerText = "$" + product[0].productPrice;
+  newPrice.innerText = "₹" + product.productPrice;
 
   const oldPrice = document.createElement("span");
   oldPrice.className = "text-muted old-price";
-  oldPrice.innerText = "$" + (product[0].productPrice + 1000);
+  oldPrice.innerText = "₹" + (product.productPrice + 1000);
 
   priceContainer.appendChild(newPrice);
   priceContainer.appendChild(oldPrice);
 
   const description = document.createElement("p");
-  description.innerText = product[0].productDesc;
+  description.innerText = product.productDesc;
 
   const addToCart = document.createElement("button");
-  addToCart.innerText = "Add to Cart";
-  addToCart.className = "btn btn-yellow my-2";
+  if (isAdded == false) {
+    addToCart.innerText = "Add to Cart";
+    addToCart.className = "btn btn-yellow my-2";
+  } else {
+    addToCart.innerText = "Remove from Cart";
+    addToCart.className = "btn btn-dark my-2";
+  }
   addToCart.onclick = () => addToCartClick(product, addToCart);
 
   productDetails.appendChild(title);
@@ -75,35 +94,32 @@ function displayProduct() {
   productDetails.appendChild(description);
   productDetails.appendChild(addToCart);
 
-  mainImage.innerHTML =
-    '<img src="' + product[0].productImgSrc + '" class="img-fluid" />';
+  const img = [];
 
-  // product.images.forEach((imageUrl) => {
-  //   const imageContainer = document.createElement("div");
-  //   imageContainer.className = "col-2 col-sm-2 p-1 single-product-photo";
-  //   imageContainer.onclick = () => {
-  //     mainImage.innerHTML = '<img src="' + imageUrl + '" class="img-fluid" />';
-  //   };
+  for (var i in product.images) img.push(product.images[i]);
 
-  //   const image = document.createElement("img");
-  //   image.src = imageUrl;
-  //   image.className = "img-fluid";
+  mainImage.innerHTML = '<img src="' + img[1] + '" class="img-fluid" />';
 
-  //   imageContainer.appendChild(image);
-  //   otherImages.appendChild(imageContainer);
-  // });
+  for (let i = 1; i < img.length; i++) {
+    const imageContainer = document.createElement("div");
+    imageContainer.className = "col-2 col-sm-2 p-1 single-product-photo";
+    imageContainer.onclick = () => {
+      mainImage.innerHTML = '<img src="' + img[i] + '" class="img-fluid" />';
+    };
+    const image = document.createElement("img");
+    image.src = img[i];
+    image.className = "img-fluid";
+    imageContainer.appendChild(image);
+    otherImages.appendChild(imageContainer);
+  }
 }
 
 function addToCartClick(product, btn) {
-  const isAdded = btn.innerText.includes("Add");
+  //const isAdded = btn.innerText.includes("Add");
 
-  if (localStorage.getItem("userId") == null) {
-    location.href = "login.html";
-  }
-
-  if (isAdded) {
+  if (isAdded == false) {
     // TODO: use fetch method to add to cart in backend
-    addtocart();
+    addtocart(product);
     btn.className = "btn btn-dark my-2";
     btn.innerText = "Remove from Cart";
   } else {
@@ -112,27 +128,26 @@ function addToCartClick(product, btn) {
     btn.className = "btn btn-yellow my-2";
     btn.innerText = "Add to Cart";
   }
+  // }
 }
 
-function addtocart() {
-  fetch("http://localhost:8080/cart/" + getProduct(), {
+function addtocart(product) {
+  fetch("http://localhost:8080/" + userId + "/cart/" + getProduct(), {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ product }),
+    body: JSON.stringify(product),
   });
   //console.log(JSON.stringify({ product }));
 }
 
 function removefromcart() {
-  fetch("http://localhost:8080/cart/" + getProduct(), {
+  fetch("http://localhost:8080/" + userId + "/cart/" + getProduct(), {
     method: "DELETE",
     headers: {
       Accept: "application/json",
     },
   });
 }
-
-loadproduct();
