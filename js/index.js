@@ -1,7 +1,9 @@
 document.getElementById("login-profile").onclick = function () {
   if (localStorage.getItem("userId") == null) {
-    location.href = "login.html";
+    console.log("no");
+    window.location.replace("login.html");
   } else {
-    location.href = "profile.html";
+    console.log("yes");
+    window.location.replace("profile.html");
   }
 };

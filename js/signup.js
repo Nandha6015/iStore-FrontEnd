@@ -22,9 +22,10 @@ form.onsubmit = (event) => {
   })
     .then((res) => res.json())
     .then((userdata) => {
-      const userId = userdata;
+      const userId = userdata.userId;
       console.log(userId);
       localStorage.setItem("userId", userId);
+      console.log(localStorage.getItem("userId"));
     });
   location.href = "index.html";
 };

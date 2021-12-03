@@ -17,6 +17,15 @@
 
 let id;
 const userId = localStorage.getItem("userId");
+let isAdded = false;
+isInCart();
+loadproduct();
+
+function getProduct() {
+  const url = new URL(window.location.toString());
+  id = url.searchParams.get("productId");
+  return id;
+}
 
 function loadproduct() {
   fetch("http://localhost:8080/products/" + getProduct(), {
@@ -28,15 +37,22 @@ function loadproduct() {
     .then((res) => res.json())
     .then((singleprod) => {
       const product = singleprod;
-      //console.log(product);
       displayProduct(product);
     });
 }
 
-function getProduct() {
-  const url = new URL(window.location.toString());
-  id = url.searchParams.get("productId");
-  return id;
+function isInCart() {
+  fetch("http://localhost:8080/" + userId + "/cart/" + getProduct(), {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      //console.log(data, 1);
+      isAdded = data;
+    });
 }
 
 const productDetails = document.getElementById("productDetails");
@@ -64,8 +80,13 @@ function displayProduct(product) {
   description.innerText = product.productDesc;
 
   const addToCart = document.createElement("button");
-  addToCart.innerText = "Add to Cart";
-  addToCart.className = "btn btn-yellow my-2";
+  if (isAdded == false) {
+    addToCart.innerText = "Add to Cart";
+    addToCart.className = "btn btn-yellow my-2";
+  } else {
+    addToCart.innerText = "Remove from Cart";
+    addToCart.className = "btn btn-dark my-2";
+  }
   addToCart.onclick = () => addToCartClick(product, addToCart);
 
   productDetails.appendChild(title);
@@ -94,15 +115,9 @@ function displayProduct(product) {
 }
 
 function addToCartClick(product, btn) {
-  const isAdded = btn.innerText.includes("Add");
-  //localStorage.clear();
-  //console.log(localStorage.key(0));
-  //console.log(localStorage.getItem("userId"));
-  // if (localStorage.getItem("userId") == null) {
-  //console.log(localStorage.getItem("userId"));
-  // location.href = "login.html";
-  // } else {
-  if (isAdded) {
+  //const isAdded = btn.innerText.includes("Add");
+
+  if (isAdded == false) {
     // TODO: use fetch method to add to cart in backend
     addtocart(product);
     btn.className = "btn btn-dark my-2";
@@ -136,5 +151,3 @@ function removefromcart() {
     },
   });
 }
-
-loadproduct();
