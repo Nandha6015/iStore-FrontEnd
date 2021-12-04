@@ -180,7 +180,7 @@
       display: -ms-flexbox;
       display: flex;
       max-width: 675px;
-      min-height: 400px;
+      min-height: 600px;
       margin-bottom: 125px;
       background-color: #ffffff;
       border-radius: 5px;
@@ -215,3 +215,45 @@
       -ms-flex: 3;
           flex: 3;
       padding: 40px 30px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+      .tab-group{
+        display: flex;
+        justify-content: center;
+      }
+      .tab{
+        flex-grow: 1;
+        padding:5px;
+        list-style:none;
+        border:solid 1px #CCC;
+        text-align:center;
+        cursor:pointer;
+      }
+      .panel-group{
+        height:100px;
+        border:solid 1px #CCC;
+        border-top:none;
+        background:#eee;
+      }
+      .panel{
+        display:none;
+      }
+      .tab.is-active{
+        background:blue;
+        color:#FFF;
+        transition: all 0.2s ease-out;
+      }
+      .panel.is-show{
+        display:block;
+      }
