@@ -1,29 +1,6 @@
 const cartcontainer = document.getElementById("cart-container");
 const userProducts = [];
 const userId = localStorage.getItem("userId");
-/*{
-    userId: 0,
-    product: {
-      productId: 1,
-      productName: "iphone 1",
-      productImgSrc: "img/img-products/product-1.png",
-      productPrice: 10000,
-    },
-    productNos: 1,
-    productTotalPrice: 10000,
-  },
-  {
-    userId: 0,
-    product: {
-      productId: 1,
-      productName: "iphone 2",
-      productImgSrc: "img/img-products/product-2.png",
-      productPrice: 20000,
-    },
-    productNos: 1,
-    productTotalPrice: 20000,
-  },
-];*/
 loadStore();
 
 function loadStore() {
@@ -43,7 +20,6 @@ function loadStore() {
 
 function onLoad() {
   userProducts.forEach((products) => {
-    //console.log(products);
     createProduct(products);
   });
 }
@@ -83,7 +59,7 @@ function createProduct(product) {
 
   const para1 = document.createElement("p");
   para1.className = "text-uppercase";
-  para1.innerText = "$" + product.productPrice;
+  para1.innerText = "₹" + product.productPrice;
 
   const thirdDiv = document.createElement("div");
   thirdDiv.className = "col-10 mx-auto col-md-2";
@@ -97,17 +73,37 @@ function createProduct(product) {
   //   </div>
   // </div>
 
-  const span1 = document.createElement("span");
-  span1.className = "btn btn-black mx-1";
-  span1.innerText = "-";
-
   const span2 = document.createElement("span");
   span2.className = "btn btn-black mx-1";
   span2.innerText = product.productNos;
+  span2.id = "prod" + product.productId;
+
+  const para2 = document.createElement("p");
+  para2.className = "text-uppercase";
+  para2.innerText = "₹" + product.productPrice * product.productNos;
+  para2.id = "total" + product.productId;
+
+  const span1 = document.createElement("span");
+  span1.className = "btn btn-black mx-1";
+  span1.innerText = "-";
+  span1.onclick = () => {
+    product.productNos -= 1;
+    document.getElementById("prod" + product.productId).innerHTML =
+      product.productNos;
+    document.getElementById("total" + product.productId).innerHTML =
+      "₹" + product.productPrice * product.productNos;
+  };
 
   const span3 = document.createElement("span");
   span3.className = "btn btn-black mx-1";
   span3.innerText = "+";
+  span3.onclick = () => {
+    product.productNos += 1;
+    document.getElementById("prod" + product.productId).innerHTML =
+      product.productNos;
+    document.getElementById("total" + product.productId).innerHTML =
+      "₹" + product.productPrice * product.productNos;
+  };
 
   const fourthDiv = document.createElement("div");
   fourthDiv.className = "d-flex justify-content-center align-items-center";
@@ -123,22 +119,22 @@ function createProduct(product) {
   //   <p class="text-uppercase">100.00$</p>
   // </div>
 
-  const para2 = document.createElement("p");
-  para2.className = "text-uppercase";
-  para2.innerText = "$" + product.productPrice * product.productNos;
-
   const sixthDiv = document.createElement("div");
   sixthDiv.className = "col-10 mx-auto col-md-2";
   sixthDiv.append(para2);
+
+  const line = document.createElement("hr");
+  line.setAttribute("width", "90%");
 
   cartcontainer.append(firstDiv);
   cartcontainer.append(secondDiv);
   cartcontainer.append(thirdDiv);
   cartcontainer.append(fifthDiv);
   cartcontainer.append(sixthDiv);
+  cartcontainer.append(line);
 }
 
-document.getElementById("checkout").onclick = function () {
+document.getElementById("checkout").onclick = () => {
   fetch("http://localhost:8080/" + userId + "/orders", {
     method: "POST",
     headers: {
@@ -155,5 +151,5 @@ document.getElementById("checkout").onclick = function () {
   });
   //console.log(productIds);
   //console.log(JSON.stringify({ userProducts }));
-  //location.href = "orderhistory.html";
+  location.href = "orderhistory.html";
 };
