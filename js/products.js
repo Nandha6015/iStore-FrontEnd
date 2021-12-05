@@ -32,7 +32,7 @@ function loadproduct() {
 function createProduct(product) {
   const h2 = document.createElement("a");
   h2.href = "singleproduct.html?productId=" + product.productId;
-  h2.className = "h2 text-capitalize";
+  h2.className = "h5 text-capitalize";
   h2.innerText = product.productName;
 
   const oldPrice = document.createElement("span");
@@ -51,20 +51,17 @@ function createProduct(product) {
   details.append(h6);
 
   const content = document.createElement("div");
-  content.className = "col-7";
+  content.className = "col-7 ";
   content.appendChild(details);
 
   const image = document.createElement("img");
-  image.className = "col-5 mh-100";
+  image.className = "img-responsive";
   image.src = product.productImgSrc;
 
   const productDiv = document.createElement("div");
   productDiv.className = "col-5 shadow container row p-5 m-4";
-  productDiv.style.height = "250px";
-  productDiv.style.overflow = "hidden";
   productDiv.appendChild(image);
   productDiv.appendChild(content);
-
   productContainer.appendChild(productDiv);
 }
 

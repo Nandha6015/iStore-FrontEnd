@@ -98,14 +98,15 @@ function displayProduct(product) {
 
   for (var i in product.images) img.push(product.images[i]);
 
-  mainImage.innerHTML = '<img src="' + img[1] + '" class="img-fluid" />';
+  mainImage.innerHTML = '<img src="' + img[1] + '" class="img-fluid mh-100" />';
 
   for (let i = 1; i < img.length; i++) {
     const imageContainer = document.createElement("div");
     imageContainer.className = "col-2 col-sm-2 p-1 single-product-photo";
     imageContainer.style.height = "200px";
     imageContainer.onclick = () => {
-      mainImage.innerHTML = '<img src="' + img[i] + '" class="img-fluid" />';
+      mainImage.innerHTML =
+        '<img src="' + img[i] + '" class="img-fluid mh-100" />';
     };
     const image = document.createElement("img");
     image.src = img[i];
