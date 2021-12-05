@@ -50,7 +50,7 @@ function createProduct(product) {
   para.innerText = product.productName;
 
   const secondDiv = document.createElement("div");
-  secondDiv.className = "col-10 mx-auto col-md-4";
+  secondDiv.className = "col-10 mx-auto col-md-3";
   secondDiv.append(para);
 
   // <div class="col-10 mx-auto col-md-2">
@@ -123,6 +123,19 @@ function createProduct(product) {
   sixthDiv.className = "col-10 mx-auto col-md-2";
   sixthDiv.append(para2);
 
+  //remove from cart
+
+  const button = document.createElement("i");
+  button.className = "fas fa-minus-circle";
+  //  button.innerText = "remove";
+  button.onclick = () => removefromcartClick();
+
+  const sDiv = document.createElement("div");
+  sDiv.className = "col-10 mx-auto col-md-1";
+  sDiv.append(button);
+
+  // end of remove from cart
+
   const line = document.createElement("hr");
   line.setAttribute("width", "90%");
 
@@ -131,6 +144,7 @@ function createProduct(product) {
   cartcontainer.append(thirdDiv);
   cartcontainer.append(fifthDiv);
   cartcontainer.append(sixthDiv);
+  cartcontainer.append(sDiv);
   cartcontainer.append(line);
 }
 
@@ -153,3 +167,14 @@ document.getElementById("checkout").onclick = () => {
   //console.log(JSON.stringify({ userProducts }));
   location.href = "orderhistory.html";
 };
+
+//remove from cart
+
+function removefromcart() {
+  fetch("http://localhost:8080/" + userId + "/cart/" + getProduct(), {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+    },
+  });
+}
