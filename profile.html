@@ -1,70 +1,46 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <title>profile</title>
     <!-- Font Icon -->
-
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
-
 <!-- fontawesome css -->
 <link rel="stylesheet" href="css/all.min.css">
 <!-- Bootstrap css -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
-
     <!-- Main css -->
-
     <link rel="stylesheet" href="css/profile.css">
-
 </head>
-
 <body>
-
-
-
     <div class="main">
-
-
-
         <div class="container">
-
             <div class="booking-content">
-
                 <div class="booking-image">
-
                     <img class="booking-img" src="img/26.png" alt="Booking Image" style="width:650;height:560px">
-
                 </div>
-
                 <div class="booking-form">
-
                     <div class="card-body p-4">
-                        <h6>Hai</h6>
+                        <h6>Profile</h6>
                         <hr class="mt-0 mb-4">
                         <div class="row pt-1">
                             <div class="col-6 mb-3">
                                 <h6>Name</h6>
-                                <p class="text-muted" id="Name" name="userName">{{userName}}</p>
+                                <input class="text-muted" id="Name" name="userName" disabled></input>
                               </div>
                           <div class="col-6 mb-3">
                             <h6>Email</h6>
-                            <p class="text-muted " id="Email" name="userEmail">{{userEmail}}</p>
+                            <input class="text-muted " id="Email" name="userEmail" disabled></input>
                           </div>
                           <div class="col-6 mb-3">
                             <h6>Phone</h6>
-                            <p class="text-muted" id="Phone" name="userPhone">{{userPhoneNumber}}</p>
+                            <input class="text-muted" id="Phone" name="userPhone" disabled></input>
                           </div>
                           <div class="col-6 mb-3">
                               <h6>Password</h6>
-                              <p class="text-muted" id="Password" name="userPassword">{{userPassword}}</p>
+                              <input class="text-muted" id="Password" name="userPassword" disabled></input>
                             </div>
                         </div>
                         <h6></h6>
@@ -72,55 +48,31 @@
                         <div class="row pt-1">
                           <div class="col-6 mb-3">
                             <h6>Address</h6>
-                            <p class="text-muted" id="Address" name="userAddress"></p>
-                          </div>
-                         
+                            <input class="text-muted" id="Address" name="userAddress" disabled></input>
+                        </div>                        
                         </div>
-
                         <div class="form-group">
-
-                            <div class="select-list">
-
+                            <!-- <div class="select-list">
                                 <select name="food" id="food" required>
-
-                                   
-
                                 </select>
-
-                            </div>
+                            </div> -->
+                            <br>
                             <a href="index.html" ><button type="button"  onclick="logout()">LogOut</button></a>
-                        </div>
-
+                            <button type="button" id="submit" onclick="submit();" style="float:right; width: 60px;" hidden>Submit</button>
+                            <button type="button" id="edit" onclick="editable();" style="float:right; width: 60px;">Edit</button>
+                          </div>
                         <div class="form-radio">
-
-                            
-                         
-                            
-                        </div>
-
-
-
-                    
-
+                      </div>
                     </form>
-
-                   
                     <!-- jQuery -->
                     <script src="js/jquery-3.4.1.min.js"></script>
                     <!-- Bootstrap js -->
-                    <script src="js/bootstrap.bundle.min.js"></script>
-                    
+                    <script src="js/bootstrap.bundle.min.js"></script>                    
                   <script src="vendor/jquery/jquery.min.js"></script>
                     <!-- fontwesome js -->
                     <script src="js/all.min.js"></script>
-
                     <script src="js/profile.js"></script>
-                    
-
-    
-
 </body>
-
 </html>
     
   

@@ -103,12 +103,13 @@ function displayProduct(product) {
   for (let i = 1; i < img.length; i++) {
     const imageContainer = document.createElement("div");
     imageContainer.className = "col-2 col-sm-2 p-1 single-product-photo";
+    imageContainer.style.height = "200px";
     imageContainer.onclick = () => {
       mainImage.innerHTML = '<img src="' + img[i] + '" class="img-fluid" />';
     };
     const image = document.createElement("img");
     image.src = img[i];
-    image.className = "img-fluid";
+    image.className = "img-fluid mw-100 mh-100";
     imageContainer.appendChild(image);
     otherImages.appendChild(imageContainer);
   }

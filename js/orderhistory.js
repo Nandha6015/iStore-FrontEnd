@@ -89,23 +89,23 @@ function createProduct(product) {
   //   </div>
   // </div>
 
-  const span1 = document.createElement("span");
-  span1.className = "btn btn-black mx-1";
-  span1.innerText = "-";
+  // const span1 = document.createElement("span");
+  // span1.className = "btn btn-black mx-1";
+  // span1.innerText = "-";
 
   const span2 = document.createElement("span");
   span2.className = "btn btn-black mx-1";
   span2.innerText = product.productNos;
 
-  const span3 = document.createElement("span");
-  span3.className = "btn btn-black mx-1";
-  span3.innerText = "+";
+  // const span3 = document.createElement("span");
+  // span3.className = "btn btn-black mx-1";
+  // span3.innerText = "+";
 
   const fourthDiv = document.createElement("div");
   fourthDiv.className = "d-flex justify-content-center align-items-center";
-  fourthDiv.appendChild(span1);
+  // fourthDiv.appendChild(span1);
   fourthDiv.appendChild(span2);
-  fourthDiv.appendChild(span3);
+  // fourthDiv.appendChild(span3);
 
   const fifthDiv = document.createElement("div");
   fifthDiv.className = "col-10 mx-auto col-md-2";

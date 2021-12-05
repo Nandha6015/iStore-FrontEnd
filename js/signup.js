@@ -9,7 +9,7 @@ form.onsubmit = (event) => {
     userName: data.userName,
     userEmail: data.userEmail,
     userPassword: data.userPassword,
-    userAddress: data.userAddress,
+    userPhoneNumber: data.userPhoneNumber,
   };
 
   fetch("http://localhost:8080/newuser", {

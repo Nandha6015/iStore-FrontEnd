@@ -19,12 +19,31 @@ function loadStore() {
 }
 
 function onLoad() {
+  let subtotal = 0;
+  let total = 0;
+  let ship = 0;
+
+  const subttl = document.getElementById("sub-total");
+  const shipmnt = document.getElementById("ship");
+  const ttl = document.getElementById("total");
+
+  subttl.innerHTML = subtotal;
+  shipmnt.innerHTML = ship;
+  ttl.innerHTML = total;
+
   userProducts.forEach((products) => {
-    createProduct(products);
+    subtotal += createProduct(products, subttl, subtotal, ttl, total);
+    ship = 50;
+    shipmnt.innerHTML = ship;
   });
 }
 
-function createProduct(product) {
+function createProduct(product, subttl, subtotal, ttl, total) {
+  subtotal += product.productPrice;
+  subttl.innerHTML = subtotal;
+  total += subtotal;
+  ttl.innerHTML = total;
+
   // <div class="col-10 mx-auto col-md-2 my-3">
   //   <img
   //     src="img/img-products/product-1.png"
@@ -92,6 +111,10 @@ function createProduct(product) {
       product.productNos;
     document.getElementById("total" + product.productId).innerHTML =
       "₹" + product.productPrice * product.productNos;
+    subtotal -= product.productPrice;
+    subttl.innerHTML = subtotal;
+    total -= product.productPrice;
+    ttl.innerHTML = total;
   };
 
   const span3 = document.createElement("span");
@@ -103,6 +126,10 @@ function createProduct(product) {
       product.productNos;
     document.getElementById("total" + product.productId).innerHTML =
       "₹" + product.productPrice * product.productNos;
+    subtotal += product.productPrice;
+    subttl.innerHTML = subtotal;
+    total += product.productPrice;
+    ttl.innerHTML = total;
   };
 
   const fourthDiv = document.createElement("div");
@@ -132,6 +159,8 @@ function createProduct(product) {
   cartcontainer.append(fifthDiv);
   cartcontainer.append(sixthDiv);
   cartcontainer.append(line);
+
+  return product.productNos * product.productPrice;
 }
 
 document.getElementById("checkout").onclick = () => {
@@ -149,7 +178,5 @@ document.getElementById("checkout").onclick = () => {
       Accept: "application/json",
     },
   });
-  //console.log(productIds);
-  //console.log(JSON.stringify({ userProducts }));
-  location.href = "orderhistory.html";
+  location.href = "payment.html";
 };
