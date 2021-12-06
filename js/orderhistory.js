@@ -1,5 +1,6 @@
 const userId = localStorage.getItem("userId");
-const ordercontainer = document.getElementById("order_history-container");
+const ordercontainer = document.getElementById("order-container");
+// document.getElementById("order_history-container");
 const orders = [];
 
 loadStore();
@@ -18,13 +19,54 @@ function loadStore() {
     });
 }
 
-function onLoadOrders() {}
+{
+  /* <div class="col-10 mx-auto col-md-2">orderdate</div>
+    <hr width="90%" />
+    <div
+      class="row my-3 align-items-center"
+      id="order_history-container">
+    </div> 
+*/
+}
 
-function onLoad() {
+async function onLoad() {
   orders.forEach((order) => {
-    createProduct(product);
+    fetch("http://localhost:8080/" + userId + "/orders/" + order.orderId, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((displayCart) => {
+        createup(order);
+        displayCart.forEach((product) => {
+          createProduct(product);
+          console.log(order.orderId, "in");
+        });
+      });
   });
 }
+
+function createup(order) {
+  // const hrline = document.createElement("hr");
+  // hrline.setAttribute("width", "100%");
+
+  const div = document.createElement("div");
+  div.innerText = order.orderDate;
+  div.className = "col-10 mx-auto col-md-2";
+
+  const hor = document.createElement("hr");
+  hor.setAttribute("width", "90%");
+  div.appendChild(hor);
+
+  // ordercontainer.append(hrline);
+  ordercontainer.append(div);
+  fet(order);
+  console.log(order.orderId, "out");
+  //await sleep(1000);
+}
+function fet(order) {}
 
 // <div class="col-10 mx-auto col-md-2 my-3">
 //   <img
@@ -126,10 +168,15 @@ function createProduct(product) {
   const line = document.createElement("hr");
   line.setAttribute("width", "90%");
 
-  ordercontainer.append(firstDiv);
-  ordercontainer.append(secondDiv);
-  ordercontainer.append(thirdDiv);
-  ordercontainer.append(fifthDiv);
-  ordercontainer.append(sixthDiv);
-  ordercontainer.append(line);
+  const div = document.createElement("div");
+  div.className = "row my-3 align-items-center";
+
+  div.append(firstDiv);
+  div.append(secondDiv);
+  div.append(thirdDiv);
+  div.append(fifthDiv);
+  div.append(sixthDiv);
+  div.append(line);
+
+  ordercontainer.append(div);
 }
