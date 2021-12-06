@@ -1,7 +1,6 @@
 const userId = localStorage.getItem("userId");
 const ordercontainer = document.getElementById("order_history-container");
-const order = [];
-console.log(userId);
+const orders = [];
 
 loadStore();
 
@@ -14,14 +13,15 @@ function loadStore() {
   })
     .then((res) => res.json())
     .then((displayCart) => {
-      order.push(...displayCart);
-      console.log(order);
+      orders.push(...displayCart);
       onLoad();
     });
 }
 
+function onLoadOrders() {}
+
 function onLoad() {
-  order.forEach((product) => {
+  orders.forEach((order) => {
     createProduct(product);
   });
 }

@@ -152,10 +152,22 @@ function createProduct(product, subttl, subtotal, ttl, total) {
 
   //remove from cart
 
-  const button = document.createElement("i");
-  button.className = "fas fa-minus-circle";
-  //  button.innerText = "remove";
-  button.onclick = () => removefromcartClick();
+  const button = document.createElement("button");
+
+  button.style.color = "black";
+  button.style.border = "none";
+  button.style.backgroundColor = "white";
+  button.style.cursor = "pointer";
+  button.onmouseover = () => {
+    button.style.color = "red";
+  };
+  button.onmouseout = () => {
+    button.style.color = "black";
+  };
+  const icon = document.createElement("i");
+  icon.className = "fas fa-trash";
+  button.append(icon);
+  button.onclick = () => removefromcart(product.productId);
 
   const sDiv = document.createElement("div");
   sDiv.className = "col-10 mx-auto col-md-1";
@@ -197,11 +209,12 @@ document.getElementById("checkout").onclick = () => {
 
 //remove from cart
 
-function removefromcart() {
-  fetch("http://localhost:8080/" + userId + "/cart/" + getProduct(), {
+function removefromcart(prodId) {
+  fetch("http://localhost:8080/" + userId + "/cart/" + prodId, {
     method: "DELETE",
     headers: {
       Accept: "application/json",
     },
   });
+  location.reload();
 }
