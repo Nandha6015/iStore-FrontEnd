@@ -51,7 +51,7 @@ function createProduct(product) {
   details.append(h6);
 
   const content = document.createElement("div");
-  content.className = "col-7 ";
+  content.className = "col-7";
   content.appendChild(details);
 
   const image = document.createElement("img");
