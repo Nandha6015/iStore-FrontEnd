@@ -1,6 +1,13 @@
 const cartcontainer = document.getElementById("cart-container");
 const userProducts = [];
 const userId = localStorage.getItem("userId");
+let subtotal = 0;
+let total = 0;
+let ship = 0;
+
+const subttl = document.getElementById("sub-total");
+const shipmnt = document.getElementById("ship");
+const ttl = document.getElementById("total");
 loadStore();
 
 function loadStore() {
@@ -19,30 +26,21 @@ function loadStore() {
 }
 
 function onLoad() {
-  let subtotal = 0;
-  let total = 0;
-  let ship = 0;
-
-  const subttl = document.getElementById("sub-total");
-  const shipmnt = document.getElementById("ship");
-  const ttl = document.getElementById("total");
-
-  subttl.innerHTML = subtotal;
-  shipmnt.innerHTML = ship;
-  ttl.innerHTML = total;
-
   userProducts.forEach((products) => {
-    subtotal += createProduct(products, subttl, subtotal, ttl, total);
-    ship = 50;
-    shipmnt.innerHTML = ship;
+    createProduct(products);
   });
+  subttl.innerText = subtotal;
+  shipmnt.innerText = ship;
+  ttl.innerText = total;
 }
 
-function createProduct(product, subttl, subtotal, ttl, total) {
+function createProduct(product) {
   subtotal += product.productPrice;
-  subttl.innerHTML = subtotal;
-  total += subtotal;
-  ttl.innerHTML = total;
+  subttl.innerText = subtotal;
+  total += product.productPrice + 50;
+  ttl.innerText = total;
+  ship += 50;
+  shipmnt.innerText = ship;
 
   // <div class="col-10 mx-auto col-md-2 my-3">
   //   <img
@@ -106,15 +104,17 @@ function createProduct(product, subttl, subtotal, ttl, total) {
   span1.className = "btn btn-black mx-1";
   span1.innerText = "-";
   span1.onclick = () => {
-    product.productNos -= 1;
-    document.getElementById("prod" + product.productId).innerHTML =
-      product.productNos;
-    document.getElementById("total" + product.productId).innerHTML =
-      "₹" + product.productPrice * product.productNos;
-    subtotal -= product.productPrice;
-    subttl.innerHTML = subtotal;
-    total -= product.productPrice;
-    ttl.innerHTML = total;
+    if (product.productNos > 1) {
+      product.productNos -= 1;
+      document.getElementById("prod" + product.productId).innerHTML =
+        product.productNos;
+      document.getElementById("total" + product.productId).innerHTML =
+        "₹" + product.productPrice * product.productNos;
+      subtotal -= product.productPrice;
+      subttl.innerText = subtotal;
+      total -= product.productPrice;
+      ttl.innerText = total;
+    }
   };
 
   const span3 = document.createElement("span");
@@ -127,9 +127,9 @@ function createProduct(product, subttl, subtotal, ttl, total) {
     document.getElementById("total" + product.productId).innerHTML =
       "₹" + product.productPrice * product.productNos;
     subtotal += product.productPrice;
-    subttl.innerHTML = subtotal;
+    subttl.innerText = subtotal;
     total += product.productPrice;
-    ttl.innerHTML = total;
+    ttl.innerText = total;
   };
 
   const fourthDiv = document.createElement("div");
@@ -186,23 +186,17 @@ function createProduct(product, subttl, subtotal, ttl, total) {
   cartcontainer.append(sDiv);
   cartcontainer.append(line);
 
-  return product.productNos * product.productPrice;
+  //return product.productNos * product.productPrice;
 }
 
 document.getElementById("checkout").onclick = () => {
-  fetch("http://localhost:8080/" + userId + "/orders", {
-    method: "POST",
+  fetch("http://localhost:8080/" + userId + "/cart", {
+    method: "PUT",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(userProducts),
-  });
-  fetch("http://localhost:8080/" + userId + "/cart", {
-    method: "DELETE",
-    headers: {
-      Accept: "application/json",
-    },
   });
   location.href = "payment.html";
 };
