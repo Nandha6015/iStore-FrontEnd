@@ -37,10 +37,10 @@ function createProduct(product) {
 
   const oldPrice = document.createElement("span");
   oldPrice.className = "text-muted old-price mx-2";
-  oldPrice.innerText = "$" + (product.productPrice + 1000);
+  oldPrice.innerText = "₹" + (product.productPrice + 1000);
 
   const price = document.createElement("span");
-  price.innerText = "$" + product.productPrice;
+  price.innerText = "₹" + product.productPrice;
 
   const h6 = document.createElement("h6");
   h6.appendChild(oldPrice);
